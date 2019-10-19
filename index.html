@@ -1,0 +1,151 @@
+<!DOCTYPE html>
+<html lang="en-us" style = "overflow: hidden;">
+
+<head>
+    <meta charset="UTF-8">
+    <title>Hangman Game</title>
+
+    <link rel = "stylesheet" href = "assets/css/reset.css" type = "text/css">
+    <link rel="stylesheet" href="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/css/bootstrap.min.css"
+        integrity="sha384-ggOyR0iXCbMQv3Xipma34MD+dH/1fQ784/j6cY/iJTQUOhcWr7x9JvoRxT2MZw1T" crossorigin="anonymous">
+
+    <link rel = "stylesheet" href = "assets/css/gallows.css" type = "text/css">
+
+    <link rel="stylesheet" media="screen" href="https://fontlibrary.org/face/archicoco" type="text/css" />
+</head>
+
+<body onload = "setup_game()">
+<div class = "ImageHolder">
+    <img src = "assets/images/paper.png" class = "Paper" alt="papier">
+    <div class = "GameBox">
+        <h1>Wanted</h1>
+        <img src = "assets/images/Cookie-Monster-Avatar.jpg" class = "Cookie" alt = "monster">
+        <h2>Cookius Thaddeus Monsterus</h2>
+        <h3>for the crime of:</h3>
+        <h4 id = "guessBox">_</h4>
+        <p>
+            Guesses remaining: <div id = "guessCount">0</div>
+        </p>
+        <p>
+            Guessed letters: <div id = "letterGuesses">None</div>
+        </p>
+        <p id = "instruction">
+            Press any key to guess a letter.
+        </p>
+    </div>
+</div>
+
+<script type = "text/javascript">
+var words_list = 
+[
+    {word: "Sarkicism", letters: ['s', 'a', 'r', 'k', 'i', 'c', 'i', 's', 'm']},
+    {word: "Eloquence", letters: ['e', 'l', 'o', 'q', 'u', 'e', 'n', 'c', 'e']},
+    {word: "Panache", letters: ['p', 'a', 'n', 'a', 'c', 'h', 'e']},
+    {word: "Theft", letters: ['t', 'h', 'e', 'f', 't']},
+    {word: "Burlesque", letters: ['b', 'u', 'r', 'l', 'e', 's', 'q', 'u', 'e']},
+    {word: "Bluejeans", letters: ['b', 'l', 'u', 'e', 'j', 'e', 'a', 'n', 's']},
+    {word: "Parallelparking", letters: ['p', 'a', 'r', 'a', 'l', 'l', 'e', 'l', 'p', 'a', 'r', 'k', 'i', 'n', 'g']},
+    {word: "Videogames", letters: ['v', 'i', 'd', 'e', 'o', 'g', 'a', 'm', 'e', 's']},
+    {word: "Vandalism", letters: ['v', 'a', 'n', 'd', 'a', 'l', 'i', 's', 'm']},
+    {word: "Dancing", letters: ['d', 'a', 'n', 'c', 'i', 'n', 'g']}
+];
+var words_selected = {};
+// var guesses_calc = words_selected.letters.length + 5; why does this give a type error. I'm not calling it yet! it even gives a type error after it's been set and I can console.log this EXACT string.
+var guesses = 20;
+var guess_letters = [];
+var guess_record = [];
+var letters_string = "";
+var record_string = "";
+var correct_letters = 0;
+var you_won = false;
+var set_guess_box = document.getElementById("guessBox");
+var set_guess_count = document.getElementById("guessCount");
+var set_instruction = document.getElementById("instruction");
+var set_letter_guesses = document.getElementById("letterGuesses");
+
+function setup_game()
+{
+    var temp = Math.floor(Math.random() * words_list.length);
+    words_selected = words_list[temp];
+    for(var goo = 0; goo < words_selected.letters.length; goo++){
+        guess_letters[goo] = "_";
+        letters_string = letters_string + guess_letters[goo] + " ";
+    }
+    set_guess_box.textContent = letters_string;
+    set_guess_count.textContent = guesses;
+}
+
+document.onkeyup = function(key)
+{
+    var user_guess = key.key;
+    var key_exists = false;
+    for(var goose = 0; goose < guess_record.length; goose++)
+    {
+        if(user_guess === guess_record[goose]){
+            key_exists = true;
+        }
+    }
+    if(key_exists === false && guesses > 0 && you_won === false)
+    {
+        letters_string = "";
+        for(happ = 0; happ < words_selected.letters.length; happ++)
+        {
+            if(user_guess === words_selected.letters[happ])
+            {
+                guess_letters[happ] = user_guess;
+            }
+            letters_string = letters_string + guess_letters[happ] + " ";
+        }
+
+        set_guess_box.textContent = letters_string;
+        guess_record.push(user_guess);
+        record_string = "";
+        for(yday = 0; yday < guess_record.length; yday++)
+        {
+            record_string = record_string + guess_record[yday] + " ";
+        }
+        set_letter_guesses.textContent = record_string;
+
+        guesses--;
+        set_guess_count.textContent = guesses;
+    }
+
+    correct_letters = 0;
+    for(var lett = 0; lett < guess_letters.length; lett++)
+    {
+        if(words_selected.letters[lett] === guess_letters[lett])
+        {
+            correct_letters++;
+        }
+    }
+
+    if(correct_letters === guess_letters.length)
+    {
+        you_won = true;
+    }
+
+    if(guesses <= 0)
+    {
+        set_instruction.textContent = "If ya don't know this I ain't payin ya a cent..."
+    }
+
+    if(you_won === true)
+    {
+        set_instruction.textContent = "You got a good head on yer shoulders. Here's yer fifty dollars."
+    }
+}
+</script>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"
+    integrity="sha384-q8i/X+965DzO0rT7abK41JStQIAqVgRVzpbzo5smXKp4YfRvH+8abtTE1Pi6jizo"
+    crossorigin="anonymous"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/popper.js/1.14.7/umd/popper.min.js"
+    integrity="sha384-UO2eT0CpHqdSJQ6hJty5KVphtPhzWj9WO1clHTMGa3JDZwrnQq4sF86dIHNDz0W1"
+    crossorigin="anonymous"></script>
+<script src="https://stackpath.bootstrapcdn.com/bootstrap/4.3.1/js/bootstrap.min.js"
+    integrity="sha384-JjSmVgyd0p3pXB1rRibZUAYoIIy6OrQ6VrjIEaFf/nJGzIxFDsf4x0xIM+B07jRM"
+    crossorigin="anonymous"></script>
+
+</body>
+
+</html>

@@ -1,0 +1,51 @@
+body
+{
+    background-image: url("../images/gallows.jpg");
+    background-size: 100%;
+    background-color: #DDCDBC;
+    background-repeat: no-repeat;
+    font-family: 'ArchicocoRegular'; 
+}
+
+h2
+{
+    font-size: 25px;
+}
+
+h3
+{
+    font-size: 20px;
+}
+
+h4
+{
+    font-size: 30px;
+}
+
+.ImageHolder
+{
+    margin: 80px;
+    position: relative;
+    float: right;
+    width: 30%;
+}
+
+.Paper
+{
+    width: 100%;
+}
+
+.Cookie
+{
+    mix-blend-mode: luminosity;
+    width: 150px;
+}
+
+.GameBox
+{
+    position: absolute;
+    text-align: center;
+    vertical-align: middle;
+    top: 25px;
+    width: 98%;
+}
