@@ -96,9 +96,9 @@ document.onkeyup = function(key)
             }
             letters_string = letters_string + guess_letters[happ] + " ";
         }
-
         set_guess_box.textContent = letters_string;
         guess_record.push(user_guess);
+        
         record_string = "";
         for(yday = 0; yday < guess_record.length; yday++)
         {
