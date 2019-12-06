@@ -8,6 +8,8 @@
 
 #### I still don't know what the rubrick means by "technologies used and screenshots of essential code" because technically all the code is essential so I'm just gonna screencap every line of code and lay out what they do here:
 
+## if you want to play the game follow this link https://ametueraspirant.github.io/hang_the_mann/
+
 ![image1](assets/images/readme2.png)
 
 here we see the array of objects that are then pulled into the words_selected object later. (side note I never used the "name" variable but I put it in there in case I needed it. and I guess it makes it more readable.)
